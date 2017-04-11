@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head> 
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="mystyle.css">
+         
+</head>
+<body onload="getText()">
+
+<div style="width:45% ; float:right">
+<table id="table">
+  <tr>
+    <th>Field</th>
+    <th>User input</th>
+  </tr>
+  <tr>
+    <td>First Name</td>
+    <td id="tfirstName"></td>
+  </tr>
+  <tr>
+    <td>Last Name</td>
+    <td id="tlastName"></td>
+  </tr>
+  <tr>
+    <td>House Number</td>
+    <td id="thouseNumber"></td>
+  </tr>
+  <tr>
+    <td>Street</td>
+    <td id="tstreet"></td>
+  </tr>
+  <tr>
+    <td>City</td>
+    <td id="tcity"></td>
+  </tr>
+  <tr>
+    <td>Province</td>
+    <td id="tprovince"></td>
+  </tr>
+  <tr>
+    <td>Zipcode</td>
+    <td id="tzipcode"></td>
+  </tr>
+  <tr>
+    <td>Phone Number</td>
+    <td id="tphoneNumber"></td>
+  </tr>
+  <tr>
+    <td>Cell Phone Number</td>
+    <td id="tcellPhoneNumber"></td>
+  </tr>
+  <tr>
+    <td>Birthday</td>
+    <td id="tbirthday"></td>
+  </tr>
+  <tr>
+    <td>Citizenship</td>
+    <td id="tcitizenship"></td>
+  </tr>
+    <tr>
+    <td>Zodiac Sign</td>
+    <td id="tzodiacSign"></td>
+  </tr>
+    <tr>
+    <td>ZodiacYear</td>
+    <td id="tzodiacYear"></td>
+  </tr>
+    <tr>
+    <td>Day</td>
+    <td id="tday"></td>
+  </tr>
+</table>
+</div>
+<div style="width:45%; float:left">
+FirstName <input type="text" id="firstName" onkeypress="return onlyAlphabets(event,this)" >
+<p></p>
+LastName <input type="text" id="lastName" onkeypress="return onlyAlphabets(event,this)">
+<p></p>
+Address
+<p></p>
+House Number <input type="text" id="houseNumber" >
+<p></p>
+Street: <input type="text" id="street">
+<p></p>
+City <input type="text" id="city">
+<p></p>
+Province <input type="text" id="province">
+<p></p>
+Zipcode <input  type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' id="zipcode" maxlength="5">
+<p></p> 
+Phone Number : +662 <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' id="phoneNumber" maxlength="7">
+<p></p>
+Cell Phone Number : +66 <input type="tel" onkeypress='return event.charCode >= 48 && event.charCode <= 57'id="cellPhoneNumber" maxlength="9">
+<p></p>
+Birthday <input type="date" id="birthday">
+<p></p>
+Citizenship number <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' id="citizenship" maxlength="13">
+<p></p>
+Zodiac Sign <select id="zodiacSign">
+	  <option value="Aquarius">Aquarius</option>
+                <option value="Pisces">Pisces</option>
+                <option value="Aries">Aries</option>
+                <option value="Taurus">Taurus</option>
+                <option value="Germini">Germini</option>
+                <option value="Cancer">Cancer</option>
+                <option value="Leo">Leo</option>
+                <option value="Virgo">Virgo</option>
+                <option value="Libra">Libra</option>
+                <option value="Scorpio">Scorpio</option>
+                <option value="Sagittarius">Sagittarius</option>
+                <option value="Capricorn">Capricorn</option>
+            </select>
+<p></p>
+Zodiac Year <select id="zodiacYear">
+				<option value="Rat">Rat</option>
+                <option value="Ox">Ox</option>
+                <option value="Tiger">Tiger</option>
+                <option value="Rabbit">Rabbit</option>
+                <option value="Dragon">Dragon</option>
+                <option value="Snake">Snake</option>
+                <option value="Horse">Horse</option>
+                <option value="Goat">Goat</option>
+                <option value="Monkey">Monkey</option>
+                <option value="Rooster">Rooster</option>
+                <option value="Dog">Dog</option>
+                <option value="Pig">Pig</option>
+            </select>
+<p></p>
+Birth day of week <select id="day">
+				<option value="Monday">Monday</option>
+                <option value="Tuesday">Tuesday</option>
+                <option value="Wednesday">Wednesday</option>
+                <option value="Thursday">Thursday</option>
+                <option value="Friday">Friday</option>
+                <option value="Saturday">Saturday</option>
+                <option value="Sunday">Sunday</option>
+            </select>
+
+
+<p></p>
+<button class="button" style="vertical-align:middle" onclick="setText()"><span>Save </span></button>
+<button class="button" style="vertical-align:middle" onclick="clearText()"><span>Cancel</span></button>
+<button class="button" style="vertical-align:middle" onclick="submit()"><span>Submit </span></button>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html> 
