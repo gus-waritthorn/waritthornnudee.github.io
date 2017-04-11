@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script>
+list = ["จันทบุรี.txt","ฉะเชิงเทรา.txt","ชลบุรี.txt","ตราด.txt","ปราจีนบุรี.txt","ระยอง.txt","สระแก้ว.txt","กรุงเทพมหานคร.txt","กำแพงเพชร.txt","ชัยนาท.txt","นครนายก.txt","นครปฐม.txt","นครสวรรค์.txt","นนทบุรี.txt","ปทุมธานี.txt","พระนครศรีอยุธยา.txt","พิจิตร.txt","พิษณุโลก.txt","ลพบุรี.txt","สมุทรปราการ.txt","สมุทรสงคราม.txt","สมุทรสาคร.txt","สระบุรี.txt","สิงห์บุรี.txt",
+"สุพรรณบุรี.txt","สุโขทัย.txt","อุทัยธานี.txt","อ่างทอง.txt","เพชรบูรณ์.txt","น่าน.txt","พะเยา.txt","ลำปาง.txt","ลำพูน.txt","อุตรดิตถ์.txt","เชียงราย.txt","เชียงใหม่.txt","แม่ฮ่องสอน.txt","แพร่.txt","กาฬสินธุ์.txt","ขอนแก่น.txt","ชัยภูมิ.txt","นครพนม.txt","นครราชสีมา.txt","บึงกาฬ.txt","บุรีรัมย์.txt","มหาสารคาม.txt","มุกดาหาร.txt","ยโสธร.txt","ร้อยเอ็ด.txt","ศรีสะเกษ.txt","สกลนคร.txt","สุรินทร์.txt","หนองคาย.txt","หนองบัวลำภู.txt","อำนาจเจริญ.txt","อุดรธานี.txt","อุบลราชธานี.txt","เลย.txt","กระบี่.txt","ชุมพร.txt","ตรัง.txt","นครศรีธรรมราช.txt","นราธิวาส.txt","ปัตตานี.txt","พังงา.txt","พัทลุง.txt","ภูเก็ต.txt","ยะลา.txt","ระนอง.txt","สงขลา.txt","สตูล.txt","สุราษฎร์ธานี.txt","กาญจนบุรี.txt","ตาก.txt","ประจวบคีรีขันธ์.txt","ราชบุรี.txt","เพชรบุรี.txt"];
+inputList = ["#lbFirstName","#lbLastName","#lbBirthday","#lbGender","#lbProvince"];
+
+var age = 0;
+$(document).ready(function(){
+	$("#submit").click(function(){
+		$("label").css("color","red");
+		var firstname = $("#firstName").val();
+		var lastname = $("#lastName").val();
+		var boo = checkEmpty();
+		if(boo == true){
+			$("p, input, button, select , br").fadeOut(2000);
+			var selectProvince = $('#province').find(":selected").text();
+			var index = $("#province").prop('selectedIndex');
+			var imagePath = "sign/" + selectProvince + ".png";
+			var mottoPath = "motto/" + list[index];
+			$("#image").attr({"src":imagePath});
+			$("#text").load(mottoPath);
+			
+			for (var i=0 ; i<array.length; i++){
+				$(inputList[i]).text("");
+			}
+			
+			var gender = $('#gender').find(":selected").text();
+			$("#name").text("Welcome Mr./Ms. " + firstname + " " + lastname);
+			if(age < 13){
+				$("body").css("background-image","url('http://www.sevgitomurcuklari.com/kutuphane/resim/7.jpg')");
+				$("body").css("background-attachment","fixed");
+				$("body").css("background-size","100% 100%");
+				$("body").css("font-family","verdana");
+				$("body").append("<style>* { font-family: verdana; font-size: 20px}</style>");
+			} else {
+				if(gender == "Male"){
+					//it's male
+					$("body").css("background-image","url('http://awiderbridge.com/wp-content/uploads/2013/08/Anonymous-suit-tie-Hitman-Agent-47-simple-black-background-_122-40.jpg')");
+					$("body").css("background-attachment","fixed");
+					$("body").css("background-size","100% 100%");
+					$("body").append("<style>* { color:white; font-size: 20px}</style>");
+				} else {
+					//it's female
+					$("body").css("background-image","url('https://img.clipartfest.com/e91dd916b6f351bc9177fc816415e478_flower-background-google-a-flower-background_719-555.jpeg')");
+					$("body").css("background-attachment","fixed");
+					$("body").css("background-size","100% 100%");
+				}
+			}
+		} else {
+			
+			
+		}
+	});
+	function checkEmpty(){
+		array = ["#firstName","#lastName","#birthday","#gender","#province"];
+		if($("#firstName").val() == "" || $("#lastName").val() == "" || $("#birthday").val() == "" || 
+		$("#gender").val() == null || $("#province").val() == null){
+			for (var i=0 ; i<array.length; i++){
+				if($(array[i]).val() == "" || $(array[i]).val() == null){
+					$(inputList[i]).text("It's empty, please enter a value.");
+				} else {
+					$(inputList[i]).text("");
+				}
+			}
+			return false;
+		} else {
+			return true;
+		}
+	}
+	$("#cancel").click(function(){
+		$(".clear").val('');
+	});
+
+});
+function submitBday() {
+    var str = "Your birthday is: ";
+    var Bdate = document.getElementById('birthday').value;
+    var Bday =+ new Date(Bdate);
+	age = ~~ ((Date.now() - Bday) / (31557600000));
+    str += Bdate + ". You are " + ~~ ((Date.now() - Bday) / (31557600000)) + " years old.";
+    var theBday = document.getElementById('text');
+    theBday.innerHTML = str;
+}
+function createProvinceOption(){
+	var options = "";
+	for(var i=0 ; i<list.length ; i++){
+		options += "<option value='list[i].substring(0,list[i].length-4)'>"+ list[i].substring(0,list[i].length-4) +"</option>";
+	}
+	document.getElementById("province").innerHTML = options;
+	document.getElementById("province").value = null;
+	document.getElementById("gender").value = null;
+}
+</script>
+</head>
+<body style="text-align:center;margin-top: 50px;margin-bottom: 30px;" onload="createProvinceOption()" >
+<p>First name</p>
+<input  type="text" class="clear" id="firstName" onkeypress='return event.charCode >= 65 && event.charCode <= 90 || (event.charCode >=97 && event.charCode <=122)'/> <br />
+<label id="lbFirstName"></label>
+<p>Last name</p>
+<input  type="text" class="clear" id="lastName" onkeypress='return event.charCode >= 65 && event.charCode <= 90 || (event.charCode >=97 && event.charCode <=122)'/> <br />
+<label id="lbLastName"></label>
+<p>Birthday</p>
+<input  type="date" class="clear" id="birthday" onblur="submitBday()"/> <br />
+<label id="lbBirthday"></label>
+<p>Gender</p>
+<select value="" id="gender" class="clear" >
+	<option value="male">Male</option>
+    <option value="female">Female</option>
+</select> <br />
+<label id="lbGender"></label>
+<p>Province</p>
+<select id="province" class="clear" onchange="provinceData()"></select> <br />
+<label id="lbProvince"></label>
+<p></p>
+<button type="button" id="submit" >Submit</button>
+<button type="button" id="cancel" >Cancel</button>
+<pre id="name"></pre>
+<pre id="text"></pre>
+<img style="opacity::0.2;" id="image" src="" />
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script>
+list = ["จันทบุรี.txt","ฉะเชิงเทรา.txt","ชลบุรี.txt","ตราด.txt","ปราจีนบุรี.txt","ระยอง.txt","สระแก้ว.txt","กรุงเทพมหานคร.txt","กำแพงเพชร.txt","ชัยนาท.txt","นครนายก.txt","นครปฐม.txt","นครสวรรค์.txt","นนทบุรี.txt","ปทุมธานี.txt","พระนครศรีอยุธยา.txt","พิจิตร.txt","พิษณุโลก.txt","ลพบุรี.txt","สมุทรปราการ.txt","สมุทรสงคราม.txt","สมุทรสาคร.txt","สระบุรี.txt","สิงห์บุรี.txt",
+"สุพรรณบุรี.txt","สุโขทัย.txt","อุทัยธานี.txt","อ่างทอง.txt","เพชรบูรณ์.txt","น่าน.txt","พะเยา.txt","ลำปาง.txt","ลำพูน.txt","อุตรดิตถ์.txt","เชียงราย.txt","เชียงใหม่.txt","แม่ฮ่องสอน.txt","แพร่.txt","กาฬสินธุ์.txt","ขอนแก่น.txt","ชัยภูมิ.txt","นครพนม.txt","นครราชสีมา.txt","บึงกาฬ.txt","บุรีรัมย์.txt","มหาสารคาม.txt","มุกดาหาร.txt","ยโสธร.txt","ร้อยเอ็ด.txt","ศรีสะเกษ.txt","สกลนคร.txt","สุรินทร์.txt","หนองคาย.txt","หนองบัวลำภู.txt","อำนาจเจริญ.txt","อุดรธานี.txt","อุบลราชธานี.txt","เลย.txt","กระบี่.txt","ชุมพร.txt","ตรัง.txt","นครศรีธรรมราช.txt","นราธิวาส.txt","ปัตตานี.txt","พังงา.txt","พัทลุง.txt","ภูเก็ต.txt","ยะลา.txt","ระนอง.txt","สงขลา.txt","สตูล.txt","สุราษฎร์ธานี.txt","กาญจนบุรี.txt","ตาก.txt","ประจวบคีรีขันธ์.txt","ราชบุรี.txt","เพชรบุรี.txt"]
+
+var age = 0;
+$(document).ready(function(){
+	$("#submit").click(function(){
+		var boo = checkEmpty();
+		if(boo == true){
+			$("p, input, button, select").fadeOut(2000);
+			var selectProvince = $('#province').find(":selected").text();
+			var index = $("#province").prop('selectedIndex');
+			var imagePath = "sign/" + selectProvince + ".png";
+			var mottoPath = "motto/" + list[index];
+			alert("You are selected :" + selectProvince + " and the index of this data is : " + index + " path to the image file is : " + imagePath +" and the motto Path is : " + mottoPath);
+			$("#image").attr({"src":imagePath});
+			$("#text").load(mottoPath);
+		} else {
+			alert("Please fill in the data");
+		}
+	});
+	function checkEmpty(){
+		if($("#firstName").val() == "" || $("#lastName").val() == "" || $("#birthday").val() == "" || $("#gender").val() == "" || $("#province").val() == ""){
+			return false;
+		} else {
+			return true;
+		}
+	}
+	$("#cancel").click(function(){
+		$(".clear").val('');
+	});
+
+});
+function submitBday() {
+    var str = "Your birthday is: ";
+    var Bdate = document.getElementById('birthday').value;
+    var Bday =+ new Date(Bdate);
+	age = ~~ ((Date.now() - Bday) / (31557600000));
+    str += Bdate + ". You are " + ~~ ((Date.now() - Bday) / (31557600000));
+    var theBday = document.getElementById('text');
+    theBday.innerHTML = str;
+}
+function createProvinceOption(){
+	var options = "";
+	for(var i=0 ; i<list.length ; i++){
+		options += "<option value='list[i].substring(0,list[i].length-4)'>"+ list[i].substring(0,list[i].length-4) +"</option>";
+	}
+	document.getElementById("province").innerHTML = options;
+	document.getElementById("province").value = "";
+	document.getElementById("gender").value = "";
+}
+
+</script>
+</head>
+<body style="text-align:center;margin-top: 50px;margin-bottom: 30px;" onload="createProvinceOption()" >
+<p>First name</p>
+<input type="text" class="clear" id="firstName" onkeypress='return event.charCode >= 65 && event.charCode <= 90 || (event.charCode >=97 && event.charCode <=122)'/>
+<p>Last name</p>
+<input type="text" class="clear" id="lastName" onkeypress='return event.charCode >= 65 && event.charCode <= 90 || (event.charCode >=97 && event.charCode <=122)'/>
+<p>Birthday</p>
+<input type="date" class="clear" id="birthday" onblur="submitBday()"/>
+<p>Gender</p>
+<select id="gender" class="clear" >
+	<option value="male">Male</option>
+    <option value="female">Female</option>
+</select>
+<p>Province</p>
+<select id="province" class="clear" onchange="provinceData()"></select>
+<p></p>
+<button type="button" id="submit" >Submit</button>
+<button type="button" id="cancel" >Cancel</button>
+<pre id="text"></pre>
+<img id="image" src="" />
+</body>
+</html>
