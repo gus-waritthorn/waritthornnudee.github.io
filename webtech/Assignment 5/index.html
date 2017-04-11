@@ -1,0 +1,169 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script>
+list = ["จันทบุรี.txt","ฉะเชิงเทรา.txt","ชลบุรี.txt","ตราด.txt","ปราจีนบุรี.txt","ระยอง.txt","สระแก้ว.txt","กรุงเทพมหานคร.txt","กำแพงเพชร.txt","ชัยนาท.txt","นครนายก.txt","นครปฐม.txt","นครสวรรค์.txt","นนทบุรี.txt","ปทุมธานี.txt","พระนครศรีอยุธยา.txt","พิจิตร.txt","พิษณุโลก.txt","ลพบุรี.txt","สมุทรปราการ.txt","สมุทรสงคราม.txt","สมุทรสาคร.txt","สระบุรี.txt","สิงห์บุรี.txt",
+"สุพรรณบุรี.txt","สุโขทัย.txt","อุทัยธานี.txt","อ่างทอง.txt","เพชรบูรณ์.txt","น่าน.txt","พะเยา.txt","ลำปาง.txt","ลำพูน.txt","อุตรดิตถ์.txt","เชียงราย.txt","เชียงใหม่.txt","แม่ฮ่องสอน.txt","แพร่.txt","กาฬสินธุ์.txt","ขอนแก่น.txt","ชัยภูมิ.txt","นครพนม.txt","นครราชสีมา.txt","บึงกาฬ.txt","บุรีรัมย์.txt","มหาสารคาม.txt","มุกดาหาร.txt","ยโสธร.txt","ร้อยเอ็ด.txt","ศรีสะเกษ.txt","สกลนคร.txt","สุรินทร์.txt","หนองคาย.txt","หนองบัวลำภู.txt","อำนาจเจริญ.txt","อุดรธานี.txt","อุบลราชธานี.txt","เลย.txt","กระบี่.txt","ชุมพร.txt","ตรัง.txt","นครศรีธรรมราช.txt","นราธิวาส.txt","ปัตตานี.txt","พังงา.txt","พัทลุง.txt","ภูเก็ต.txt","ยะลา.txt","ระนอง.txt","สงขลา.txt","สตูล.txt","สุราษฎร์ธานี.txt","กาญจนบุรี.txt","ตาก.txt","ประจวบคีรีขันธ์.txt","ราชบุรี.txt","เพชรบุรี.txt"];
+inputList = ["#lbFirstName","#lbLastName","#lbBirthday","#lbGender","#lbProvince"];
+
+var age = 0;
+$(document).ready(function(){
+	$("#submit").click(function(){
+		$("label").css("color","red");
+		var firstname = $("#firstName").val();
+		var lastname = $("#lastName").val();
+		var boo = checkEmpty();
+		if(boo == true){
+			$("p, input, button, select , br").fadeOut(2000);
+			var selectProvince = $('#province').find(":selected").text();
+			var index = $("#province").prop('selectedIndex');
+			var imagePath = "sign/" + selectProvince + ".png";
+			var mottoPath = "motto/" + list[index];
+			$("#image").attr({"src":imagePath});
+			$("#text").load(mottoPath);
+		}
+		});
+	});
+	function checkEmpty(){
+		array = ["#firstName","#lastName","#birthday","#gender","#province"];
+		if($("#firstName").val() == "" || $("#lastName").val() == "" || $("#birthday").val() == "" || 
+		$("#gender").val() == null || $("#province").val() == null){
+			for (var i=0 ; i<array.length; i++){
+				if($(array[i]).val() == "" || $(array[i]).val() == null){
+					$(inputList[i]).text("It's empty, please enter a value.");
+				} else {
+					$(inputList[i]).text("");
+				}
+			}
+			return false;
+		} else {
+			return true;
+		}
+	}
+	$("#cancel").click(function(){
+		$(".clear").val('');
+	});
+
+function submitBday() {
+    var str = "Your birthday is: ";
+    var Bdate = document.getElementById('birthday').value;
+    var Bday =+ new Date(Bdate);
+	age = ~~ ((Date.now() - Bday) / (31557600000));
+    str += Bdate + ". You are " + ~~ ((Date.now() - Bday) / (31557600000)) + " years old.";
+    var theBday = document.getElementById('text');
+    theBday.innerHTML = str;
+}
+function createProvinceOption(){
+	document.getElementById("province").value = null;
+	document.getElementById("gender").value = null;
+}
+</script>
+</head>
+<body style="text-align:center;margin-top: 50px;margin-bottom: 30px;" onload="createProvinceOption()" >
+<form action="phpscript.php" method="get">
+<p>First name</p>
+<input  type="text" class="clear" name="firstname" id="firstName" onkeypress='return event.charCode >= 65 && event.charCode <= 90 || (event.charCode >=97 && event.charCode <=122)'/> <br />
+<label id="lbFirstName"></label>
+<p>Last name</p>
+<input  type="text" class="clear" name="lastname" id="lastName" onkeypress='return event.charCode >= 65 && event.charCode <= 90 || (event.charCode >=97 && event.charCode <=122)'/> <br />
+<label id="lbLastName"></label>
+<p>Birthday</p>
+<input  type="date" class="clear" name="bday" id="birthday" onblur="submitBday()"/> <br />
+<label id="lbBirthday"></label>
+<p>Gender</p>
+<select name="gender" id="gender" class="clear" >
+	<option value="male">Male</option>
+    <option value="female">Female</option>
+</select> <br />
+<label id="lbGender"></label>
+<p>Province</p>
+<select name="province" id="province" class="clear" onchange="provinceData()">
+	<option value="จันทบุรี">จันทบุรี</option>
+    <option value="ฉะเชิงเทรา">ฉะเชิงเทรา</option>
+    <option value="ชลบุรี">ชลบุรี</option>
+    <option value="ตราด">ตราด</option>
+    <option value="ปราจีนบุรี">ปราจีนบุรี</option>
+    <option value="ระยอง">ระยอง</option>
+    <option value="สระแก้ว">สระแก้ว</option>
+    <option value="กรุงเทพมหานคร">กรุงเทพมหานคร</option>
+    <option value="กำแพงเพชร">กำแพงเพชร</option>
+    <option value="ชัยนาท">ชัยนาท</option>
+    <option value="นครนายก">นครนายก</option>
+    <option value="นครปฐม">นครปฐม</option>
+    <option value="นครสวรรค์">นครสวรรค์</option>
+    <option value="นนทบุรี">นนทบุรี</option>
+    <option value="ปทุมธานี">ปทุมธานี</option>
+    <option value="พระนครศรีอยุธยา">พระนครศรีอยุธยา</option>
+    <option value="พิจิตร">พิจิตร</option>
+    <option value="พิษณุโลก">พิษณุโลก</option>
+    <option value="ลพบุรี">ลพบุรี</option>
+    <option value="สมุทรปราการ">สมุทรปราการ</option>
+    <option value="สมุทรสงคราม">สมุทรสงคราม</option>
+    <option value="สมุทรสาคร">สมุทรสาคร</option>
+    <option value="สระบุรี">สระบุรี</option>
+    <option value="สิงห์บุรี">สิงห์บุรี</option>
+    <option value="สุพรรณบุรี">สุพรรณบุรี</option>
+    <option value="สุโขทัย">สุโขทัย</option>
+    <option value="อุทัยธานี">อุทัยธานี</option>
+    <option value="อ่างทอง">อ่างทอง</option>
+    <option value="เพชรบูรณ์">เพชรบูรณ์</option>
+    <option value="น่าน">น่าน</option>
+    <option value="พะเยา">พะเยา</option>
+    <option value="ลำปาง">ลำปาง</option>
+    <option value="ลำพูน">ลำพูน</option>
+    <option value="อุตรดิตถ์">อุตรดิตถ์</option>
+    <option value="เชียงราย">เชียงราย</option>
+    <option value="เชียงใหม่">เชียงใหม่</option>
+    <option value="แม่ฮ่องสอน">แม่ฮ่องสอน</option>
+    <option value="แพร่">แพร่</option>
+    <option value="กาฬสินธุ์">กาฬสินธุ์</option>
+    <option value="ขอนแก่น">ขอนแก่น</option>
+    <option value="ชัยภูมิ">ชัยภูมิ</option>
+    <option value="นครพนม">นครพนม</option>
+    <option value="นครราชสีมา">นครราชสีมา</option>
+    <option value="บึงกาฬ">บึงกาฬ</option>
+    <option value="บุรีรัมย์">บุรีรัมย์</option>
+    <option value="มหาสารคาม">มหาสารคาม</option>
+    <option value="มุกดาหาร">มุกดาหาร</option>
+    <option value="ยโสธร">ยโสธร</option>
+    <option value="ร้อยเอ็ด">ร้อยเอ็ด</option>
+    <option value="ศรีสะเกษ">ศรีสะเกษ</option>
+    <option value="สกลนคร">สกลนคร</option>
+    <option value="สุรินทร์">สุรินทร์</option>
+    <option value="หนองคาย">หนองคาย</option>
+    <option value="หนองบัวลำภู">หนองบัวลำภู</option>
+    <option value="อำนาจเจริญ">อำนาจเจริญ</option>
+    <option value="อุดรธานี">อุดรธานี</option>
+    <option value="อุบลราชธานี">อุบลราชธานี</option>
+    <option value="เลย">เลย</option>
+    <option value="กระบี่">กระบี่</option>
+    <option value="ชุมพร">ชุมพร</option>
+    <option value="ตรัง">ตรัง</option>
+    <option value="นครศรีธรรมราช">นครศรีธรรมราช</option>
+    <option value="นราธิวาส">นราธิวาส</option>
+    <option value="ปัตตานี">ปัตตานี</option>
+    <option value="พังงา">พังงา</option>
+    <option value="พัทลุง">พัทลุง</option>
+    <option value="ภูเก็ต">ภูเก็ต</option>
+    <option value="ยะลา">ยะลา</option>
+    <option value="ระนอง">ระนอง</option>
+    <option value="สงขลา">สงขลา</option>
+    <option value="สตูล">สตูล</option>
+    <option value="สุราษฎร์ธานี">สุราษฎร์ธานี</option>
+    <option value="กาญจนบุรี">กาญจนบุรี</option>
+    <option value="ตาก">ตาก</option>
+    <option value="ประจวบคีรีขันธ์">ประจวบคีรีขันธ์</option>
+    <option value="ราชบุรี">ราชบุรี</option>
+    <option value="เพชรบุรี">เพชรบุรี</option>
+</select> <br />
+<p></p>
+<button type="submit" id="submit" >Submit</button>
+<button type="button" id="cancel" >Cancel</button>
+<pre id="name"></pre>
+<pre id="text"></pre>
+<img style="opacity::0.2;" id="image" src="" />
+</form>
+</body>
+</html>
