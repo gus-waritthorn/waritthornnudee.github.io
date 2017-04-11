@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html>
+<head> 
+<meta charset="UTF-8">
+     
+<script>  
+
+            
+var myArray = ["firstName","lastName","houseNumber","street","city","province","zipcode","phoneNumber","cellPhoneNumber","birthday","citizenship","zodiacSign","zodiacYear","day"];
+
+var tableList = ["tfirstName","tlastName","thouseNumber","tstreet","tcity","tprovince","tzipcode","tphoneNumber","tcellPhoneNumber","tbirthday","tcitizenship","tzodiacSign","tzodiacYear","tday"];
+var list = [];
+var listIndex = 0;
+
+function setText(){
+	for(var i=0; i<myArray.length ;i++){
+		localStorage.setItem(myArray[i],document.getElementById(myArray[i]).value);	
+	}
+	alert("Your record have been saved");
+}
+
+function getText(){
+for(var i=0 ; i<myArray.length ; i++){
+	document.getElementById(myArray[i]).value = localStorage.getItem(myArray[i]);	
+	}
+}
+
+function clearText(){
+for(var i=0 ; i< myArray.length ;i++){
+		document.getElementById(myArray[i]).value='';
+	}
+}
+function setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+    var expires = "expires="+d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+function submit(){
+var str = " ";
+if(validateEmpty() == false || selectValidation() == false){
+  for(var i=0 ; i<list.length ; i++){
+	  if(i == list.length-1){
+		  var str = str + myArray[list[i]]
+	  } else {
+			var str = str + myArray[list[i]] + " ,";  
+	  }
+  }
+  alert("This following field is null :" + str);
+} else {
+  var x = document.getElementById('firstName').value;
+  var y = document.getElementById('city').value;
+  var z = document.getElementById('citizenship').value;
+  //create cookie
+  setCookie("firstName",x,1);
+  setCookie("city",y,1);
+  setCookie("citizenship",z,1);
+  //code after user click ok
+  var cookie = getCookie("firstName") +" "+ getCookie("city") +" "+ getCookie("citizenship");
+  alert("Cookies have been collected : " + cookie);
+  ;
+}
+getData();
+}
+
+function validateEmpty() {
+	var count=0;
+	for(var i=0 ; i < myArray.length-3 ; i++){
+   	 	var x = document.getElementById(myArray[i]).value;
+        if(x == ""){
+			list[listIndex] = i;
+			listIndex++;
+        	count++;
+        }
+    }
+    if (count>0) {
+        return false;
+    } else {
+    	return true;
+    }
+}
+function selectValidation() {
+	var countSelect=0;
+	var x;
+	for(var i=11 ; i < myArray.length ; i++){
+		var x = document.getElementById(myArray[i]).value;
+		if(x == ""){
+			list[listIndex] = i;
+			listIndex++;
+			countSelect++;
+		}
+	}
+	if(countSelect>0){
+		alert("This is count : " + countSelect + " This is list : " + list);
+		return false;
+	} else {
+		return true;	
+	}
+}
+function getData(){
+	for(var i=0 ; i <tableList.length ;i++){
+		if(i == 7){
+			document.getElementById(tableList[i]).innerHTML = "+662" + document.getElementById(myArray[i]).value;
+		} else if(i == 8){
+			document.getElementById(tableList[i]).innerHTML = "+66" + document.getElementById(myArray[i]).value;
+		} else if(i==11 || i==12 ||i==13) {
+			var e = document.getElementById(myArray[i]);
+			document.getElementById(tableList[i]).innerHTML = e.options[e.selectedIndex].value;
+		}
+		else {
+			document.getElementById(tableList[i]).innerHTML = document.getElementById(myArray[i]).value;
+		}
+	}
+}
+function onlyAlphabets(e, t) {
+            try {
+                if (window.event) {
+                    var charCode = window.event.keyCode;
+                }
+                else if (e) {
+                    var charCode = e.which;
+                }
+                else { return true; }
+                if ((charCode > 64 && charCode < 91) || (charCode > 96 && charCode < 123))
+                    return true;
+                else
+                    return false;
+            }
+            catch (err) {
+                alert(err.Description);
+            }
+        }
+</script>
+         
+<style>
+input,select{
+	background-color:rgba(255,250,250,0.1);
+    height: 1.5em;
+    border:1px solid black;
+    padding: 2px 5px;
+    font-family:Verdana;
+}
+select {
+	height: 1.8em	
+}
+body {
+	margin-left: 30px;
+	margin-top: 20px;
+	margin-bottom: 30px;
+	font-family:Verdana;
+	background-image:url('http://chainimage.com/images/shiny-green-flowery-plain-wallpaper-hd-wallpapers-rocks.jpg'); 		
+    background-attachment: fixed;
+    background-size: 100% 100%;
+}
+.button {
+  display: inline-block;
+  border-radius: 4px;
+  background-color: rgba(49,243,173,0.5);
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 20px;
+  padding: 10px;
+  width: 160px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.button span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.button:hover span {
+  padding-right: 25px;
+}
+
+.button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+    width:5em;
+}
+
+
+</style>
+</head>
+<body onload="getText()">
+
+<div style="width:45% ; float:right">
+<table id="table">
+  <tr>
+    <th>Field</th>
+    <th>User input</th>
+  </tr>
+  <tr>
+    <td>First Name</td>
+    <td id="tfirstName"></td>
+  </tr>
+  <tr>
+    <td>Last Name</td>
+    <td id="tlastName"></td>
+  </tr>
+  <tr>
+    <td>House Number</td>
+    <td id="thouseNumber"></td>
+  </tr>
+  <tr>
+    <td>Street</td>
+    <td id="tstreet"></td>
+  </tr>
+  <tr>
+    <td>City</td>
+    <td id="tcity"></td>
+  </tr>
+  <tr>
+    <td>Province</td>
+    <td id="tprovince"></td>
+  </tr>
+  <tr>
+    <td>Zipcode</td>
+    <td id="tzipcode"></td>
+  </tr>
+  <tr>
+    <td>Phone Number</td>
+    <td id="tphoneNumber"></td>
+  </tr>
+  <tr>
+    <td>Cell Phone Number</td>
+    <td id="tcellPhoneNumber"></td>
+  </tr>
+  <tr>
+    <td>Birthday</td>
+    <td id="tbirthday"></td>
+  </tr>
+  <tr>
+    <td>Citizenship</td>
+    <td id="tcitizenship"></td>
+  </tr>
+    <tr>
+    <td>Zodiac Sign</td>
+    <td id="tzodiacSign"></td>
+  </tr>
+    <tr>
+    <td>ZodiacYear</td>
+    <td id="tzodiacYear"></td>
+  </tr>
+    <tr>
+    <td>Day</td>
+    <td id="tday"></td>
+  </tr>
+</table>
+</div>
+<div style="width:45%; float:left">
+FirstName <input type="text" id="firstName" onkeypress="return onlyAlphabets(event,this)" >
+<p></p>
+LastName <input type="text" id="lastName" onkeypress="return onlyAlphabets(event,this)">
+<p></p>
+Address
+<p></p>
+House Number <input type="text" id="houseNumber" >
+<p></p>
+Street: <input type="text" id="street">
+<p></p>
+City <input type="text" id="city">
+<p></p>
+Province <input type="text" id="province">
+<p></p>
+Zipcode <input  type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' id="zipcode" maxlength="5">
+<p></p> 
+Phone Number : +662 <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' id="phoneNumber" maxlength="7">
+<p></p>
+Cell Phone Number : +66 <input type="tel" onkeypress='return event.charCode >= 48 && event.charCode <= 57'id="cellPhoneNumber" maxlength="9">
+<p></p>
+Birthday <input type="date" id="birthday">
+<p></p>
+Citizenship number <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' id="citizenship" maxlength="13">
+<p></p>
+Zodiac Sign <select id="zodiacSign">
+				<option value="Aquarius">Aquarius</option>
+                <option value="Pisces">Pisces</option>
+                <option value="Aries">Aries</option>
+                <option value="Taurus">Taurus</option>
+                <option value="Germini">Germini</option>
+                <option value="Cancer">Cancer</option>
+                <option value="Leo">Leo</option>
+                <option value="Virgo">Virgo</option>
+                <option value="Libra">Libra</option>
+                <option value="Scorpio">Scorpio</option>
+                <option value="Sagittarius">Sagittarius</option>
+                <option value="Capricorn">Capricorn</option>
+            </select>
+<p></p>
+Zodiac Year <select id="zodiacYear">
+				<option value="Rat">Rat</option>
+                <option value="Ox">Ox</option>
+                <option value="Tiger">Tiger</option>
+                <option value="Rabbit">Rabbit</option>
+                <option value="Dragon">Dragon</option>
+                <option value="Snake">Snake</option>
+                <option value="Horse">Horse</option>
+                <option value="Goat">Goat</option>
+                <option value="Monkey">Monkey</option>
+                <option value="Rooster">Rooster</option>
+                <option value="Dog">Dog</option>
+                <option value="Pig">Pig</option>
+            </select>
+<p></p>
+Birth day of week <select id="day">
+				<option value="Monday">Monday</option>
+                <option value="Tuesday">Tuesday</option>
+                <option value="Wednesday">Wednesday</option>
+                <option value="Thursday">Thursday</option>
+                <option value="Friday">Friday</option>
+                <option value="Saturday">Saturday</option>
+                <option value="Sunday">Sunday</option>
+            </select>
+
+
+<p></p>
+<button class="button" style="vertical-align:middle" onclick="setText()"><span>Save </span></button>
+<button class="button" style="vertical-align:middle" onclick="clearText()"><span>Cancel</span></button>
+<button class="button" style="vertical-align:middle" onclick="submit()"><span>Submit </span></button>
+</div>
+
+</body>
+</html> 
